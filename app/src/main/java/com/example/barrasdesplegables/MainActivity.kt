@@ -40,9 +40,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PantallaPrevia(modifier: Modifier = Modifier){
+fun MyApp(
+    modifier: Modifier = Modifier
+){
+    var mostrandoPantallaPrevia by remember { mutableStateOf(true) }
 
-    var mostrarPantallaPrevia by remember { mutableStateOf(true) }
+    Surface(modifier) {
+        if(mostrandoPantallaPrevia){
+            PantallaPrevia(onContinueClicked = {mostrandoPantallaPrevia=false})
+        }else{
+            Greetings()
+        }
+    }
+}
+
+@Composable
+fun PantallaPrevia(onContinueClicked: () -> Unit ,modifier: Modifier = Modifier ){
 
     Column(
         modifier = modifier,
@@ -54,27 +67,13 @@ fun PantallaPrevia(modifier: Modifier = Modifier){
         )
         Button(
             modifier = modifier.padding(24.dp),
-            onClick = {mostrarPantallaPrevia = false}
+            onClick = onContinueClicked
         ) {
             Text(
                 text = "Continuar"
             )
         }
     }
-}
-
-@Preview(showBackground = true, widthDp = 350, heightDp = 350)
-@Composable
-fun PreviewPantallaCarga(){
-    BarrasDesplegablesTheme{
-        PantallaPrevia()
-    }
-}
-@Composable
-fun MyApp(
-    modifier: Modifier = Modifier
-){
-    Greetings()
 }
 
 @Composable
@@ -87,13 +86,11 @@ private fun Greetings(modifier: Modifier = Modifier,
     }
 }
 
-
-
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
 
     // Variable de estado del boton.
-    val expanded = remember { mutableStateOf(false) }
+    var expanded = remember { mutableStateOf(false) }
 
     val extraPadding = if(expanded.value) 48.dp else 0.dp
 
@@ -117,10 +114,26 @@ Surface(color = MaterialTheme.colorScheme.primary, modifier = modifier
 
 }
 
+@Preview(showBackground = true, widthDp = 350, heightDp = 350)
+@Composable
+fun PreviewPantallaCarga(){
+    BarrasDesplegablesTheme{
+        PantallaPrevia(onContinueClicked = {})
+    }
+}
+
 @Preview(showBackground = true, widthDp = 350)
 @Composable
-fun GreetingPreview() {
+fun GreetingsPreview() {
     BarrasDesplegablesTheme {
-        MyApp()
+        Greetings()
+    }
+}
+
+@Preview(showBackground = true, widthDp = 350)
+@Composable
+fun MyAppPreview() {
+    BarrasDesplegablesTheme {
+        MyApp(modifier = Modifier.fillMaxSize())
     }
 }
