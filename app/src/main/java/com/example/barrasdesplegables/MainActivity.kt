@@ -41,6 +41,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun PantallaPrevia(modifier: Modifier = Modifier){
+
     var mostrarPantallaPrevia by remember { mutableStateOf(true) }
 
     Column(
@@ -51,12 +52,12 @@ fun PantallaPrevia(modifier: Modifier = Modifier){
         Text(
             text = "Bienvenido!"
         )
-        ElevatedButton(
-            onClick = {},
-            modifier = modifier
+        Button(
+            modifier = modifier.padding(24.dp),
+            onClick = {mostrarPantallaPrevia = false}
         ) {
             Text(
-                text = "Continue"
+                text = "Continuar"
             )
         }
     }
@@ -69,20 +70,24 @@ fun PreviewPantallaCarga(){
         PantallaPrevia()
     }
 }
-
-
 @Composable
 fun MyApp(
-    modifier: Modifier = Modifier,
-    nombreColumnas: List<String> = listOf("Mundo", "Compose")
+    modifier: Modifier = Modifier
 ){
+    Greetings()
+}
+
+@Composable
+private fun Greetings(modifier: Modifier = Modifier,
+              nombreColumnas: List<String> = listOf("Mundo", "Compose")){
     Column(modifier = modifier.padding(vertical = 4.dp)){
         for(nombre in nombreColumnas){
             Greeting(name = nombre)
         }
     }
-
 }
+
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
